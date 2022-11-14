@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react"
 import Modal from "./components/modal/modal.js"
-
+import {motion} from "framer-motion"
 
 //Here are all my functions 
 function App() {
@@ -36,18 +36,30 @@ const skipImage = (e)=>{
 //The <modal> is my component - it's a modal or a popup window
   return (
     <>
-      <h1 className="header">Recommended for gallery</h1>
-      <p className="subheader">Projects from students 2022</p>
+      <motion.h1 className="header"
+            initial={{opacity: 0, y: -200}}
+            animate={{ opacity: 1, y: 0}}
+            transition={{ duration: 0.7, ease: "linear", type: "spring"}}
+      >Recommended for gallery</motion.h1>
+      <motion.p className="subheader"
+            initial={{opacity: 0, y: -200}}
+            animate={{ opacity: 1, y: 0}}
+            transition={{ duration: 0.7, ease: "linear", type: "spring"}}
+      >Projects from students 2022</motion.p>
 
       <Modal data={openModal} onClose={() => setOpenModal(false)}></Modal> 
       <div className="main-container">
        {projects.map(project=>{
         return (
           <div className="innerclass" key={project._id}>
-          <div onClick={() => setOpenModal(project)} className="card">
+          <motion.div onClick={() => setOpenModal(project)} className="card"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9}}
+          >
             <img onError={skipImage} className="image" src={project.imageOrGif}></img>
             <p className="name">{project.sender.name}</p>
-          </div>
+            <p className="title">{project.assignment.Title}</p>
+          </motion.div>
           </div>
         )
        })}
